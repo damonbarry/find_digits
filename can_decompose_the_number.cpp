@@ -18,7 +18,7 @@ namespace find_digits
         {
         public:
 
-            TEST_METHOD(should_can_determine_the_number_from_the_string_input)
+            TEST_METHOD(should_determine_the_number_from_the_string_input)
             {
                 auto num = parse_number("12345");
                 Assert::AreEqual(12345U, num);
