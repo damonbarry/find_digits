@@ -10,12 +10,12 @@ namespace find_digits
     struct number
     {
         size_t value;
-        //size_t digits;
+        size_t digits;
     };
 
     number parse_number(string)
     {
-        return number { 12345 };
+        return number { 12345, 5 };
     }
 
     namespace tests
@@ -30,11 +30,11 @@ namespace find_digits
                 Assert::AreEqual(12345U, num.value);
             }
 
-            //TEST_METHOD(should_determine_the_number_of_digits_from_the_string_input)
-            //{
-            //    auto num = parse_number("12345");
-            //    Assert::AreEqual(5, num.digits);
-            //}
+            TEST_METHOD(should_determine_the_number_of_digits_from_the_string_input)
+            {
+                auto num = parse_number("12345");
+                Assert::AreEqual(5U, num.digits);
+            }
 
         };
     }
