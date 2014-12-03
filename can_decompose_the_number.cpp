@@ -1,7 +1,12 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+#include <algorithm>
 #include <stdexcept>
+#include <iterator>
+#include <cassert>
+#include <cctype>
 #include <string>
+#include <vector>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
@@ -11,16 +16,31 @@ namespace find_digits
     struct number
     {
         size_t value;
-        size_t digits;
+        vector<unsigned char> digits;
     };
 
-    struct number_exception {};
+    vector<unsigned char> parse_digits(const string& in)
+    {
+        vector<unsigned char> digits;
+        for (auto it = in.begin(); it != in.end(); ++it)
+        {
+            assert(isdigit(*it));
+            digits.push_back(*it - '0');
+        }
+
+        return digits;
+    }
 
     number parse_number(const string& in)
     {
         size_t len;
         unsigned long num = stoul(in, &len);
-        return number { num, len };
+
+        auto it = find_if(in.begin(), in.end(), [](const unsigned char& ch){
+            return isdigit(ch);
+        });
+
+        return number { num, parse_digits(in.substr(distance(in.begin(), it), len)) };
     }
 
     namespace tests
@@ -64,8 +84,14 @@ namespace find_digits
             TEST_METHOD(should_determine_the_number_of_digits_from_the_string_input)
             {
                 auto num = parse_number("12345");
-                Assert::AreEqual(5U, num.digits);
+                Assert::AreEqual(5U, num.digits.size());
             }
+
+            //TEST_METHOD(should_expose_a_vector_of_digits_in_the_number)
+            //{
+            //    auto num = parse_number("12345");
+            //    Assert::AreEqual(vector<unsigned char> { { 1 }, { 2 }, { 3 }, { 4 }, { 5 } }, num.digits);
+            //}
 
         };
     }
