@@ -48,12 +48,12 @@ namespace find_digits
                 });
             }
 
-            //TEST_METHOD(should_throw_if_the_input_is_out_of_range)
-            //{
-            //    Assert::ExpectException<number_exception>([]{
-            //        parse_number(to_string(static_cast<unsigned long long>(ULONG_MAX) + 1));
-            //    });
-            //}
+            TEST_METHOD(should_throw_if_the_input_is_out_of_range)
+            {
+                Assert::ExpectException<out_of_range>([]{
+                    parse_number(to_string(static_cast<unsigned long long>(ULONG_MAX) + 1));
+                });
+            }
 
             TEST_METHOD(should_recognize_zero_as_a_number)
             {
