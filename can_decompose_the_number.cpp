@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include <iterator>
-#include <cstdlib>
+#include <stdexcept>
 #include <string>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -19,11 +18,9 @@ namespace find_digits
 
     number parse_number(const string& in)
     {
-        const char* begin = in.c_str();
-        char* end;
-        unsigned long num = strtoul(begin, &end, 0);
-        if (num == 0 && begin == end) throw number_exception {};
-        return number { num, distance(begin, static_cast<const char*>(end)) };
+        size_t len;
+        unsigned long num = stoul(in, &len);
+        return number { num, len };
     }
 
     namespace tests
@@ -46,10 +43,17 @@ namespace find_digits
 
             TEST_METHOD(should_throw_if_the_input_is_not_a_number)
             {
-                Assert::ExpectException<number_exception>([]{
+                Assert::ExpectException<invalid_argument>([]{
                     parse_number("abc");
                 });
             }
+
+            //TEST_METHOD(should_throw_if_the_input_is_out_of_range)
+            //{
+            //    Assert::ExpectException<number_exception>([]{
+            //        parse_number(to_string(static_cast<unsigned long long>(ULONG_MAX) + 1));
+            //    });
+            //}
 
             TEST_METHOD(should_recognize_zero_as_a_number)
             {
