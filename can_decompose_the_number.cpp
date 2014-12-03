@@ -38,6 +38,12 @@ namespace find_digits
                 Assert::AreEqual(12345U, num.value);
             }
 
+            TEST_METHOD(should_recognize_a_number_with_preceding_whitespace)
+            {
+                auto num = parse_number(" 12345");
+                Assert::AreEqual(12345U, num.value);
+            }
+
             TEST_METHOD(should_throw_if_the_input_is_not_a_number)
             {
                 Assert::ExpectException<number_exception>([]{
