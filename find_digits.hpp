@@ -16,6 +16,18 @@ namespace find_digits
         return dividend % divisor == 0;
     }
 
+    inline std::vector<unsigned char> parse_digits(const std::string& in)
+    {
+        std::vector<unsigned char> digits;
+        for (auto ch : in)
+        {
+            assert(isdigit(ch));
+            digits.push_back(ch - '0');
+        }
+
+        return digits;
+    }
+
     struct number;
     number parse_number(const std::string&);
 
@@ -38,18 +50,6 @@ namespace find_digits
             return count;
         }
     };
-
-    inline std::vector<unsigned char> parse_digits(const std::string& in)
-    {
-        std::vector<unsigned char> digits;
-        for (auto ch : in)
-        {
-            assert(isdigit(ch));
-            digits.push_back(ch - '0');
-        }
-
-        return digits;
-    }
 
     inline number parse_number(const std::string& in)
     {
