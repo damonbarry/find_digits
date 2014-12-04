@@ -12,8 +12,8 @@ namespace find_digits
 {
     struct number
     {
-        size_t value;
-        std::vector<unsigned char> digits;
+        const size_t value;
+        const std::vector<unsigned char> digits;
     };
 
     inline std::vector<unsigned char> parse_digits(const std::string& in)
