@@ -32,7 +32,7 @@
     <ClCompile Include="can_decompose_the_number.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="can_find_digits_which_divide_number.cpp">
+    <ClCompile Include="can_find_digits_which_divide_the_number.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
