@@ -12,13 +12,13 @@ namespace find_digits { namespace tests
 
         TEST_METHOD(a_digit_should_divide_the_number)
         {
-            bool divides = number_divides(5, 10);
+            bool divides = details::number_divides(5, 10);
             Assert::AreEqual(true, divides);
         }
 
         TEST_METHOD(a_digit_should_not_divide_the_number)
         {
-            bool divides = number_divides(7, 10);
+            bool divides = details::number_divides(7, 10);
             Assert::AreEqual(false, divides);
         }
 

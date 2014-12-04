@@ -11,21 +11,24 @@
 
 namespace find_digits
 {
-    inline bool number_divides(size_t divisor, size_t dividend)
+    namespace details
     {
-        return dividend % divisor == 0;
-    }
-
-    inline std::vector<unsigned char> parse_digits(const std::string& in)
-    {
-        std::vector<unsigned char> digits;
-        for (auto ch : in)
+        inline bool number_divides(size_t divisor, size_t dividend)
         {
-            assert(isdigit(ch));
-            digits.push_back(ch - '0');
+            return dividend % divisor == 0;
         }
 
-        return digits;
+        inline std::vector<unsigned char> parse_digits(const std::string& in)
+        {
+            std::vector<unsigned char> digits;
+            for (auto ch : in)
+            {
+                assert(isdigit(ch));
+                digits.push_back(ch - '0');
+            }
+
+            return digits;
+        }
     }
 
     struct number
@@ -42,7 +45,7 @@ namespace find_digits
                 return std::isdigit(ch);
             });
 
-            return number { num, parse_digits(in.substr(std::distance(in.begin(), it), len)) };
+            return number { num, details::parse_digits(in.substr(std::distance(in.begin(), it), len)) };
         }
 
         explicit number(const std::string& num) : number(parse(num)) {}
@@ -55,7 +58,7 @@ namespace find_digits
             size_t count = 0;
             for (unsigned char digit : digits)
             {
-                if (number_divides(digit, value)) { ++count; }
+                if (details::number_divides(digit, value)) { ++count; }
             }
             return count;
         }
