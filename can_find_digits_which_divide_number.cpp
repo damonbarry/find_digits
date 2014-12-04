@@ -1,33 +1,26 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+#include "find_digits.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace find_digits
+namespace find_digits { namespace tests
 {
-    bool number_divides(size_t divisor, size_t dividend)
+    TEST_CLASS(can_find_digits_which_divide_number)
     {
-        return dividend % divisor == 0;
-    }
+    public:
 
-    namespace tests
-    {
-        TEST_CLASS(can_find_digits_which_divide_number)
+        TEST_METHOD(a_digit_should_divide_the_number)
         {
-        public:
+            bool divides = number_divides(5, 10);
+            Assert::AreEqual(true, divides);
+        }
 
-            TEST_METHOD(a_digit_should_divide_the_number)
-            {
-                bool divides = number_divides(5, 10);
-                Assert::AreEqual(true, divides);
-            }
+        TEST_METHOD(a_digit_should_not_divide_the_number)
+        {
+            bool divides = number_divides(7, 10);
+            Assert::AreEqual(false, divides);
+        }
 
-            TEST_METHOD(a_digit_should_not_divide_the_number)
-            {
-                bool divides = number_divides(7, 10);
-                Assert::AreEqual(false, divides);
-            }
-
-        };
-    }
-}
+    };
+}}
