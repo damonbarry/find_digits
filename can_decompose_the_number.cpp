@@ -4,12 +4,28 @@
 #include <stdexcept>
 #include <iterator>
 #include <cassert>
+#include <sstream>
 #include <cctype>
 #include <string>
 #include <vector>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
+
+namespace Microsoft { namespace VisualStudio { namespace CppUnitTestFramework
+{
+    template<>
+    wstring ToString<vector<unsigned char>>(const vector<unsigned char>& vec)
+    {
+        wostringstream out;
+        for (auto val : vec)
+        {
+            out << L"{" << val << L"} ";
+        }
+        return out.str();
+    }
+}}}
+
 
 namespace find_digits
 {
@@ -22,10 +38,10 @@ namespace find_digits
     vector<unsigned char> parse_digits(const string& in)
     {
         vector<unsigned char> digits;
-        for (auto it = in.begin(); it != in.end(); ++it)
+        for (auto ch : in)
         {
-            assert(isdigit(*it));
-            digits.push_back(*it - '0');
+            assert(isdigit(ch));
+            digits.push_back(ch - '0');
         }
 
         return digits;
@@ -87,11 +103,13 @@ namespace find_digits
                 Assert::AreEqual(5U, num.digits.size());
             }
 
-            //TEST_METHOD(should_expose_a_vector_of_digits_in_the_number)
-            //{
-            //    auto num = parse_number("12345");
-            //    Assert::AreEqual(vector<unsigned char> { { 1 }, { 2 }, { 3 }, { 4 }, { 5 } }, num.digits);
-            //}
+            TEST_METHOD(should_expose_a_vector_of_digits_in_the_number)
+            {
+                auto num = parse_number("12345");
+                Assert::AreEqual(
+                    vector<unsigned char> { { 1 }, { 2 }, { 3 }, { 4 }, { 5 } },
+                    num.digits);
+            }
 
         };
     }
