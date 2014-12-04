@@ -28,15 +28,25 @@ namespace find_digits
         return digits;
     }
 
-    struct number;
-    number parse_number(const std::string&);
-
     struct number
     {
         const size_t value;
         const std::vector<unsigned char> digits;
 
-        explicit number(const std::string& num) : number(parse_number(num)) {}
+        static number parse(const std::string& in)
+        {
+            size_t len;
+            unsigned long num = std::stoul(in, &len);
+
+            auto it = std::find_if(in.begin(), in.end(), [](const unsigned char& ch){
+                return std::isdigit(ch);
+            });
+
+            return number { num, parse_digits(in.substr(std::distance(in.begin(), it), len)) };
+        }
+
+        explicit number(const std::string& num) : number(parse(num)) {}
+
         number(size_t value, std::vector<unsigned char>&& digits) :
             value(value), digits(std::forward<std::vector<unsigned char>>(digits)) {}
 
@@ -50,18 +60,6 @@ namespace find_digits
             return count;
         }
     };
-
-    inline number parse_number(const std::string& in)
-    {
-        size_t len;
-        unsigned long num = std::stoul(in, &len);
-
-        auto it = std::find_if(in.begin(), in.end(), [](const unsigned char& ch){
-            return std::isdigit(ch);
-        });
-
-        return number { num, parse_digits(in.substr(std::distance(in.begin(), it), len)) };
-    }
 }
 
 #endif // FIND_DIGITS_HPP
