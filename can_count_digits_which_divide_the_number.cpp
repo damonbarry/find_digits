@@ -22,5 +22,11 @@ namespace find_digits { namespace tests
             Assert::AreEqual(1U, count);
         }
 
+        TEST_METHOD(should_not_find_any_divisor_digits_in_23)
+        {
+            size_t count = number("23").count_divisor_digits();
+            Assert::AreEqual(0U, count);
+        }
+
     };
 }}
