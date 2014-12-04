@@ -1,11 +1,8 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include <algorithm>
+#include "find_digits.hpp"
 #include <stdexcept>
-#include <iterator>
-#include <cassert>
 #include <sstream>
-#include <cctype>
 #include <string>
 #include <vector>
 
@@ -29,36 +26,6 @@ namespace Microsoft { namespace VisualStudio { namespace CppUnitTestFramework
 
 namespace find_digits
 {
-    struct number
-    {
-        size_t value;
-        vector<unsigned char> digits;
-    };
-
-    vector<unsigned char> parse_digits(const string& in)
-    {
-        vector<unsigned char> digits;
-        for (auto ch : in)
-        {
-            assert(isdigit(ch));
-            digits.push_back(ch - '0');
-        }
-
-        return digits;
-    }
-
-    number parse_number(const string& in)
-    {
-        size_t len;
-        unsigned long num = stoul(in, &len);
-
-        auto it = find_if(in.begin(), in.end(), [](const unsigned char& ch){
-            return isdigit(ch);
-        });
-
-        return number { num, parse_digits(in.substr(distance(in.begin(), it), len)) };
-    }
-
     namespace tests
     {
         TEST_CLASS(can_decompose_the_number)
