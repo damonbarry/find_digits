@@ -15,6 +15,7 @@ namespace find_digits
     {
         inline bool number_divides(size_t divisor, size_t dividend)
         {
+            if (divisor == 0) { return false; }
             return dividend % divisor == 0;
         }
 

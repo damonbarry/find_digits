@@ -22,5 +22,11 @@ namespace find_digits { namespace tests
             Assert::AreEqual(false, divides);
         }
 
+        TEST_METHOD(zero_should_not_divide_the_number)
+        {
+            bool divides = details::number_divides(0, 10);
+            Assert::AreEqual(false, divides);
+        }
+
     };
 }}
