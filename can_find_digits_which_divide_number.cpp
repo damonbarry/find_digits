@@ -7,7 +7,7 @@ namespace find_digits
 {
     bool number_divides(size_t divisor, size_t dividend)
     {
-        return true;
+        return dividend % divisor == 0;
     }
 
     namespace tests
@@ -16,10 +16,16 @@ namespace find_digits
         {
         public:
 
-            TEST_METHOD(a_digit_which_divides_the_number_is_added_to_the_list)
+            TEST_METHOD(a_digit_should_divide_the_number)
             {
                 bool divides = number_divides(5, 10);
                 Assert::AreEqual(true, divides);
+            }
+
+            TEST_METHOD(a_digit_should_not_divide_the_number)
+            {
+                bool divides = number_divides(7, 10);
+                Assert::AreEqual(false, divides);
             }
 
         };
