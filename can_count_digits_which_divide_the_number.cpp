@@ -16,5 +16,11 @@ namespace find_digits { namespace tests
             Assert::AreEqual(2U, count);
         }
 
+        TEST_METHOD(should_find_one_divisor_digit_in_32)
+        {
+            size_t count = number("32").count_divisor_digits();
+            Assert::AreEqual(1U, count);
+        }
+
     };
 }}
