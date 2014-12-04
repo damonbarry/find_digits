@@ -4,16 +4,39 @@
 #include <algorithm>
 #include <iterator>
 #include <cassert>
+#include <utility>
 #include <string>
 #include <cctype>
 #include <vector>
 
 namespace find_digits
 {
+    inline bool number_divides(size_t divisor, size_t dividend)
+    {
+        return dividend % divisor == 0;
+    }
+
+    struct number;
+    number parse_number(const std::string&);
+
     struct number
     {
         const size_t value;
         const std::vector<unsigned char> digits;
+
+        explicit number(const std::string& num) : number(parse_number(num)) {}
+        number(size_t value, std::vector<unsigned char>&& digits) :
+            value(value), digits(std::forward<std::vector<unsigned char>>(digits)) {}
+
+        size_t count_divisor_digits()
+        {
+            size_t count = 0;
+            for (unsigned char digit : digits)
+            {
+                if (number_divides(digit, value)) { ++count; }
+            }
+            return count;
+        }
     };
 
     inline std::vector<unsigned char> parse_digits(const std::string& in)
@@ -38,11 +61,6 @@ namespace find_digits
         });
 
         return number { num, parse_digits(in.substr(std::distance(in.begin(), it), len)) };
-    }
-
-    inline bool number_divides(size_t divisor, size_t dividend)
-    {
-        return dividend % divisor == 0;
     }
 }
 
