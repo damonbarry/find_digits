@@ -28,5 +28,10 @@ namespace find_digits { namespace tests
             Assert::AreEqual(0U, count);
         }
 
+        TEST_METHOD(repeated_divisor_digits_should_be_counted)
+        {
+            size_t count = number("22222").count_divisor_digits();
+            Assert::AreEqual(5U, count);
+        }
     };
 }}
