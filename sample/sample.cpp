@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include <iostream>
+#include <cstring>
 #include <sstream>
+#include <limits>
 #include <array>
 #include "..\find_digits.hpp"
 
@@ -13,7 +15,7 @@ int main()
 
     size_t num_args;
     cin >> num_args;
-    cin.sync();
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     if (num_args == 0 || num_args > 15)
     {
