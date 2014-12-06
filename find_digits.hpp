@@ -50,12 +50,12 @@ namespace find_digits
         }
     }
 
-    struct number
+    class number
     {
         details::num_state state;
 
+    public:
         explicit number(const std::string& num) : number(details::parse(num)) {}
-
         number(const details::num_state& st) : state(st) {}
 
         size_t count_divisor_digits()
