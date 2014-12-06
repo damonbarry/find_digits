@@ -12,25 +12,25 @@ namespace find_digits { namespace tests
         
         TEST_METHOD(should_find_two_divisor_digits_in_24)
         {
-            size_t count = number("24").count_divisor_digits();
+            uint32_t count = number("24").count_divisor_digits();
             Assert::AreEqual(2U, count);
         }
 
         TEST_METHOD(should_find_one_divisor_digit_in_32)
         {
-            size_t count = number("32").count_divisor_digits();
+            uint32_t count = number("32").count_divisor_digits();
             Assert::AreEqual(1U, count);
         }
 
         TEST_METHOD(should_not_find_any_divisor_digits_in_23)
         {
-            size_t count = number("23").count_divisor_digits();
+            uint32_t count = number("23").count_divisor_digits();
             Assert::AreEqual(0U, count);
         }
 
         TEST_METHOD(repeated_divisor_digits_should_be_counted)
         {
-            size_t count = number("22222").count_divisor_digits();
+            uint32_t count = number("22222").count_divisor_digits();
             Assert::AreEqual(5U, count);
         }
     };

@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iterator>
 #include <cassert>
+#include <cstdint>
 #include <utility>
 #include <string>
 #include <cctype>
@@ -13,15 +14,15 @@ namespace find_digits
 {
     namespace details
     {
-        inline bool number_divides(size_t divisor, size_t dividend)
+        inline bool number_divides(uint64_t divisor, uint64_t dividend)
         {
             if (divisor == 0) { return false; }
             return dividend % divisor == 0;
         }
 
-        inline std::vector<unsigned char> parse_digits(const std::string& in)
+        inline std::vector<char> parse_digits(const std::string& in)
         {
-            std::vector<unsigned char> digits;
+            std::vector<char> digits;
             for (auto ch : in)
             {
                 assert(isdigit(ch));
@@ -33,16 +34,16 @@ namespace find_digits
 
         struct num_state
         {
-            const size_t value;
-            const std::vector<unsigned char> digits;
+            const uint64_t value;
+            const std::vector<char> digits;
         };
 
         inline num_state parse(const std::string& in)
         {
             size_t len;
-            unsigned long num = std::stoul(in, &len);
+            unsigned long long num = std::stoull(in, &len);
 
-            auto it = std::find_if(in.begin(), in.end(), [](const unsigned char& ch){
+            auto it = std::find_if(in.begin(), in.end(), [](const std::string::value_type& ch){
                 return std::isdigit(ch);
             });
 
@@ -58,10 +59,10 @@ namespace find_digits
         explicit number(const std::string& num) : number(details::parse(num)) {}
         number(const details::num_state& st) : state(st) {}
 
-        size_t count_divisor_digits()
+        uint32_t count_divisor_digits()
         {
-            size_t count = 0;
-            for (unsigned char digit : state.digits)
+            uint32_t count = 0;
+            for (char digit : state.digits)
             {
                 if (details::number_divides(digit, state.value)) { ++count; }
             }

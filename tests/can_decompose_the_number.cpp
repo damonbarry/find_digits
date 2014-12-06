@@ -12,7 +12,7 @@ using namespace std;
 namespace Microsoft { namespace VisualStudio { namespace CppUnitTestFramework
 {
     template<>
-    wstring ToString<vector<unsigned char>>(const vector<unsigned char>& vec)
+    wstring ToString<vector<char>>(const vector<char>& vec)
     {
         wostringstream out;
         for (auto val : vec)
@@ -35,13 +35,13 @@ namespace find_digits
             TEST_METHOD(should_determine_the_number_from_the_string_input)
             {
                 auto num = details::parse("12345");
-                Assert::AreEqual(12345U, num.value);
+                Assert::AreEqual(12345ULL, num.value);
             }
 
             TEST_METHOD(should_recognize_a_number_with_preceding_whitespace)
             {
                 auto num = details::parse(" 12345");
-                Assert::AreEqual(12345U, num.value);
+                Assert::AreEqual(12345ULL, num.value);
             }
 
             TEST_METHOD(should_throw_if_the_input_is_not_a_number)
@@ -54,14 +54,14 @@ namespace find_digits
             TEST_METHOD(should_throw_if_the_input_is_out_of_range)
             {
                 Assert::ExpectException<out_of_range>([]{
-                    details::parse(to_string(static_cast<unsigned long long>(ULONG_MAX) + 1));
+                    details::parse(to_string(ULLONG_MAX) + "0");
                 });
             }
 
             TEST_METHOD(should_recognize_zero_as_a_number)
             {
                 auto num = details::parse("0");
-                Assert::AreEqual(0U, num.value);
+                Assert::AreEqual(0ULL, num.value);
             }
 
             TEST_METHOD(should_determine_the_number_of_digits_from_the_string_input)
@@ -74,7 +74,7 @@ namespace find_digits
             {
                 auto num = details::parse("12345");
                 Assert::AreEqual(
-                    vector<unsigned char> { { 1 }, { 2 }, { 3 }, { 4 }, { 5 } },
+                    vector<char> { { 1 }, { 2 }, { 3 }, { 4 }, { 5 } },
                     num.digits);
             }
 
