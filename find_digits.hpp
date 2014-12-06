@@ -30,14 +30,14 @@ namespace find_digits
 
             return digits;
         }
-    }
 
-    struct number
-    {
-        const size_t value;
-        const std::vector<unsigned char> digits;
+        struct num_state
+        {
+            const size_t value;
+            const std::vector<unsigned char> digits;
+        };
 
-        static number parse(const std::string& in)
+        inline num_state parse(const std::string& in)
         {
             size_t len;
             unsigned long num = std::stoul(in, &len);
@@ -46,20 +46,24 @@ namespace find_digits
                 return std::isdigit(ch);
             });
 
-            return number { num, details::parse_digits(in.substr(std::distance(in.begin(), it), len)) };
+            return num_state { num, parse_digits(in.substr(std::distance(in.begin(), it), len)) };
         }
+    }
 
-        explicit number(const std::string& num) : number(parse(num)) {}
+    struct number
+    {
+        details::num_state state;
 
-        number(size_t value, std::vector<unsigned char>&& digits) :
-            value(value), digits(std::forward<std::vector<unsigned char>>(digits)) {}
+        explicit number(const std::string& num) : number(details::parse(num)) {}
+
+        number(const details::num_state& st) : state(st) {}
 
         size_t count_divisor_digits()
         {
             size_t count = 0;
-            for (unsigned char digit : digits)
+            for (unsigned char digit : state.digits)
             {
-                if (details::number_divides(digit, value)) { ++count; }
+                if (details::number_divides(digit, state.value)) { ++count; }
             }
             return count;
         }
